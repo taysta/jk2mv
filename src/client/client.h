@@ -447,6 +447,7 @@ extern	cvar_t	*m_filter;
 
 //EternalJK2MV
 extern	cvar_t	*cl_logChat;
+extern	cvar_t	*cl_idrive;//JAPRO ENGINE
 extern	cvar_t	*cl_commandsize;//JAPRO ENGINE
 
 extern	cvar_t	*cl_timedemo;
