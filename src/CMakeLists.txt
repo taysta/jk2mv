@@ -546,9 +546,10 @@ if (BuildMVMP)
 
 	# jk2mvmenu and assetsmv are required to run JK2MV
 	add_dependencies(${MVMP} ${MVMENU} assetsmv)
+	add_dependencies(${MVMP} ${MVMENU} assets-jk2pro)
 
 	if(BuildMVSDK)
-		add_dependencies(${MVMP} assetsmv2)
+		add_dependencies(${MVMP} bins-jk2pro)
 	endif()
 
 	# mvmenu is now built from source conainted in the mvsdk submodule
@@ -659,7 +660,7 @@ if (BuildMVDED)
 	add_dependencies(${MVDED} assetsmv)
 
 	if(BuildMVSDK)
-		add_dependencies(${MVDED} assetsmv2)
+		add_dependencies(${MVDED} bins-jk2pro)
 	endif()
 
 	# installation
