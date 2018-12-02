@@ -241,7 +241,9 @@ static	cvar_t		*fs_assetspath;
 static	cvar_t		*fs_basegame;
 static	cvar_t		*fs_copyfiles;
 static	cvar_t		*fs_gamedirvar;
-static cvar_t		*fs_globalcfg;
+#ifndef DEDICATED
+static	cvar_t		*fs_globalcfg;
+#endif
 static	searchpath_t	*fs_searchpaths;
 static	int			fs_readCount;			// total bytes read
 static	int			fs_loadCount;			// total files read
