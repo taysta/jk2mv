@@ -464,7 +464,15 @@ void RB_BeginDrawingView (void) {
 #ifdef _DEBUG
 		qglClearColor( 0.8f, 0.7f, 0.4f, 1.0f );	// FIXME: get color of sky
 #else
-		qglClearColor(r_fastSkyR->value, r_fastSkyG->value, r_fastSkyB->value, 1.0f);
+		if (r_fastsky->integer >= 2 && r_fastsky->integer <= 15) {
+			qglClearColor(g_color_table[r_fastsky->integer][0], g_color_table[r_fastsky->integer][1], g_color_table[r_fastsky->integer][2], 1.0f);
+		}
+		else if (r_fastsky->integer == 16) { //16=red special case
+			qglClearColor(1.0f, 0.0f, 0.0f, 1.0f);
+		}
+		else {
+			qglClearColor(0.0f, 0.0f, 0.0f, 1.0f);	// FIXME: get color of sky
+		}
 #endif
 	}
 
