@@ -16,6 +16,9 @@ cvar_t		*con_timestamps;
 
 //EternalJK2MV
 cvar_t		*con_opacity;
+cvar_t		*con_notifywords;
+cvar_t		*con_notifyconnect;
+cvar_t		*con_notifyvote;
 
 #define	DEFAULT_CONSOLE_WIDTH	78
 #define CON_BLANK_CHAR			' '
@@ -579,8 +582,12 @@ void Con_Init (void) {
 	con_speed = Cvar_Get ("con_speed", "3", CVAR_GLOBAL | CVAR_ARCHIVE);
 	con_scale = Cvar_Get ("con_scale", "1", CVAR_GLOBAL | CVAR_ARCHIVE);
 	con_timestamps = Cvar_Get ("con_timestamps", "0", CVAR_GLOBAL | CVAR_ARCHIVE);
+
 	//EternalJK2MV
 	con_opacity = Cvar_Get("con_opacity", "1.0", CVAR_GLOBAL|CVAR_ARCHIVE);
+	con_notifywords = Cvar_Get("con_notifywords", "0", CVAR_ARCHIVE); // "Notifies you when defined words are mentioned"
+	con_notifyconnect = Cvar_Get("con_notifyconnect", "1", CVAR_ARCHIVE); // "Notifies you when someone connects to the server"
+	con_notifyvote = Cvar_Get("con_notifyvote", "1", CVAR_ARCHIVE); // "Notifies you when someone calls a vote"
 
 	Field_Clear( &kg.g_consoleField );
 	kg.g_consoleField.widthInChars = DEFAULT_CONSOLE_WIDTH - 1; // Command prompt
@@ -604,6 +611,7 @@ void Con_Init (void) {
 Con_Linefeed
 ===============
 */
+int stampColor = COLOR_LT_TRANSPARENT;
 static void Con_Linefeed (qboolean skipnotify)
 {
 	int		i;
@@ -622,7 +630,7 @@ static void Con_Linefeed (qboolean skipnotify)
 	{
 		qtime_t	time;
 		char	timestamp[CON_TIMESTAMP_LEN + 1];
-		const unsigned char color = ColorIndex_Extended(COLOR_LT_TRANSPARENT);
+		const unsigned char color = ColorIndex_Extended(stampColor);
 
 		Com_RealTime(&time);
 		Com_sprintf(timestamp, sizeof(timestamp), "[%02d:%02d:%02d] ",
@@ -643,6 +651,8 @@ static void Con_Linefeed (qboolean skipnotify)
 
 	for ( i = 0; i < con.rowwidth; i++ )
 		con.text[line + i] = CON_BLANK;
+
+	stampColor = COLOR_LT_TRANSPARENT;
 }
 
 /*
@@ -667,6 +677,9 @@ void CL_ConsolePrint( const char *txt, qboolean extendedColors ) {
 
 	// TTimo - prefix for text that shows up in console but not in notify
 	// backported from RTCW
+	if (stampColor == COLOR_WHITE || stampColor == COLOR_CYAN) {
+		skipnotify = qtrue;
+	}
 	if (!Q_strncmp(txt, "[skipnotify]", 12)) {
 		skipnotify = qtrue;
 		txt += 12;
@@ -678,7 +691,7 @@ void CL_ConsolePrint( const char *txt, qboolean extendedColors ) {
 
 	const bool use102color = MV_USE102COLOR;
 
-	color = ColorIndex(COLOR_WHITE);
+	color = ColorIndex(stampColor);
 
 	while ( (c = *txt) != 0 ) {
 		if ( Q_IsColorString( txt ) ||
@@ -715,6 +728,8 @@ void CL_ConsolePrint( const char *txt, qboolean extendedColors ) {
 			break;
 		}
 	}
+
+	stampColor = COLOR_LT_TRANSPARENT;
 }
 
 

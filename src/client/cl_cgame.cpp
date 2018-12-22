@@ -462,6 +462,14 @@ CL_GetServerCommand
 Set up argc/argv for the given command
 ===================
 */
+extern cvar_t	*con_notifyconnect;
+extern cvar_t	*con_notifywords;
+extern cvar_t	*con_notifyvote;
+
+#define	MAX_NOTIFYWORDS 8
+extern char	notifyWords[MAX_NOTIFYWORDS][32];
+extern int stampColor;
+
 qboolean CL_GetServerCommand( int serverCommandNumber ) {
 	char	*s;
 	char	*cmd;
@@ -580,6 +588,42 @@ rescan:
 
 			CL_LogPrintf(cls.log.chat, chat);
 		}
+
+		stampColor = COLOR_WHITE;
+
+		if (con_notifywords->integer == -1) {
+			WIN_SetTaskbarState(TBS_NOTIFY, 0, 0);
+		}
+		else
+			if (strcmp(con_notifywords->string, "0")) {
+				char *text = Q_strrchr(s, ':');
+				if (text) {
+					int i;
+					for (i = 0; i<MAX_NOTIFYWORDS; i++) {
+						if (strcmp(notifyWords[i], "") && Q_stristr(text, notifyWords[i])) {
+							stampColor = COLOR_CYAN;
+							WIN_SetTaskbarState(TBS_NOTIFY, 0, 0);
+							break;
+						}
+					}
+				}
+			}
+		return qtrue;
+	}
+
+	if (!strcmp(cmd, "print")) {
+		s = Cmd_Argv(1);
+		if (Q_stristr(s, "@@@PLCONNECT") || Q_stristr(s, "@@@DISCONNECT")) {
+			stampColor = COLOR_YELLOW;
+			if (con_notifyconnect->integer)
+				WIN_SetTaskbarState(TBS_NOTIFY, 0, 0);
+		}
+		if (Q_stristr(s, "@@@PLCALLEDVOTE")) {
+			stampColor = COLOR_ORANGE;
+			if (con_notifyvote->integer)
+				WIN_SetTaskbarState(TBS_NOTIFY, 0, 0);
+		}
+		return qtrue;
 	}
 
 	// we may want to put a "connect to other server" command here

@@ -2406,6 +2406,46 @@ void CL_CheckUserinfo( void ) {
 extern CMiniHeap *G2VertSpaceServer;
 #endif
 
+extern cvar_t	*con_notifywords;
+#define			MAX_NOTIFYWORDS 8
+char			notifyWords[MAX_NOTIFYWORDS][32];
+
+static void CL_AddNotificationName(char *str) {
+	int i;
+
+	//Com_Printf("Adding %s\n", str);
+	for (i = 0; i<MAX_NOTIFYWORDS; i++) {
+		//Com_Printf("Slot is %s", notifyWords[i]);
+		if (!strcmp(notifyWords[i], "")) {
+			//Com_Printf("Copying to %i\n", i);
+			Q_strncpyz(notifyWords[i], str, sizeof(notifyWords[i]));
+			return;
+		}
+	}
+	//Error, max words
+}
+
+static void CL_UpdateNotificationWords(void) {
+	char * pch;
+	char words[MAX_CVAR_VALUE_STRING];
+
+	Q_strncpyz(words, con_notifywords->string, sizeof(words));
+	memset(notifyWords, 0, sizeof(notifyWords));
+	pch = strtok(words, " ");
+	while (pch != NULL) {
+		CL_AddNotificationName(pch);
+		pch = strtok(NULL, " ");
+	}
+}
+
+static int lastModifiedNotifyName = 0;
+static void CL_CheckCvarUpdate(void) {
+	if (lastModifiedNotifyName != con_notifywords->modificationCount) {
+		lastModifiedNotifyName = con_notifywords->modificationCount;
+		CL_UpdateNotificationWords();
+	}
+}
+
 /*
 ==================
 CL_Frame
@@ -2495,6 +2535,8 @@ void CL_Frame ( int msec ) {
 	if ( cl_timegraph->integer ) {
 		SCR_DebugGraph ( cls.realFrametime * 0.25, 0 );
 	}
+
+	CL_CheckCvarUpdate();
 
 	// see if we need to update any userinfo
 	CL_CheckUserinfo();
