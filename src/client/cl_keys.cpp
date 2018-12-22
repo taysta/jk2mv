@@ -1340,7 +1340,36 @@ void Message_Key( int key ) {
 		(keynames[ key ].lower == 'j' && kg.keys[A_CTRL].down) )
 	{
 		if ( chatField.buffer[0] && cls.state == CA_ACTIVE ) {
-			Q_strstrip(chatField.buffer, "\"%", "'/");//Replace % with / and " with '
+
+			if (Q_strchrs(chatField.buffer, "%") || Q_strchrs(chatField.buffer, "\""))
+			{ //replace " with '' and % with something github hates
+				char buffer[MAX_EDIT_LINE];
+				char *src = buffer, *dst = chatField.buffer;
+
+				Q_strncpyz(buffer, chatField.buffer, sizeof(buffer));
+
+				while (*src) {
+					if (*src == '%') {
+						*dst = '*'; // (char)176;
+						dst++;
+						*dst = '/';
+						dst++;
+						*dst = '.';
+					}
+					else if (*src == '"') {
+						*dst = '\'';
+						dst++;
+						*dst = '\'';
+					}
+					else {
+						*dst = *src;
+					}
+					src++;
+					dst++;
+				}
+				*dst = 0;
+			}
+
 			if (chat_playerNum != -1 )
 				Com_sprintf( buffer, sizeof( buffer ), "tell %i \"%s\"\n", chat_playerNum, chatField.buffer );
 			else if (chat_team)
