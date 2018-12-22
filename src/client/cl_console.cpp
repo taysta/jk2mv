@@ -581,7 +581,7 @@ void Con_Init (void) {
 	con_notifytime = Cvar_Get ("con_notifytime", "3", CVAR_GLOBAL | CVAR_ARCHIVE);
 	con_speed = Cvar_Get ("con_speed", "3", CVAR_GLOBAL | CVAR_ARCHIVE);
 	con_scale = Cvar_Get ("con_scale", "1", CVAR_GLOBAL | CVAR_ARCHIVE);
-	con_timestamps = Cvar_Get ("con_timestamps", "0", CVAR_GLOBAL | CVAR_ARCHIVE);
+	con_timestamps = Cvar_Get ("con_timestamps", "1", CVAR_GLOBAL | CVAR_ARCHIVE);
 
 	//EternalJK2MV
 	con_opacity = Cvar_Get("con_opacity", "1.0", CVAR_GLOBAL|CVAR_ARCHIVE);
@@ -829,7 +829,7 @@ void Con_DrawNotify (void)
 	int		x, v;
 	int		i;
 	int		time;
-	int		skip;
+	int		skip, xOffset;
 	const char* chattext;
 
 	currentColor = 7;
@@ -857,7 +857,7 @@ void Con_DrawNotify (void)
 		if (time >= con_notifytime->value*1000)
 			continue;
 		text = con.text + (i % con.totallines)*con.rowwidth;
-		if (!con_timestamps->integer || con_timestamps->integer == 1)
+		if (!con_timestamps->integer)
 			text += CON_TIMESTAMP_LEN;
 
 		if (cl.snap.ps.pm_type != PM_INTERMISSION && cls.keyCatchers & (KEYCATCH_UI | KEYCATCH_CGAME) ) {
@@ -870,6 +870,10 @@ void Con_DrawNotify (void)
 			cl_conXOffset = Cvar_Get ("cl_conXOffset", "0", 0);
 		}
 
+		xOffset = cl_conXOffset->integer;
+		if (con_timestamps->integer == 1)
+			xOffset -= CON_TIMESTAMP_LEN * con.charWidth;
+
 		// asian language needs to use the new font system to print glyphs...
 		//
 		// (ignore colours since we're going to print the whole thing as one string)
@@ -880,7 +884,7 @@ void Con_DrawNotify (void)
 			//
 			char sTemp[4096];	// ott
 			sTemp[0] = '\0';
-			for (x = 0 ; x < con.linewidth ; x++)
+			for (x = con_timestamps->integer == 1 ? CON_TIMESTAMP_LEN : 0 ; x < con.linewidth ; x++)
 			{
 				if ( text[x].f.color != currentColor ) {
 					currentColor = text[x].f.color;
@@ -891,14 +895,14 @@ void Con_DrawNotify (void)
 			//
 			// and print...
 			//
-			re.Font_DrawString(cl_conXOffset->integer + con.charWidth, v, sTemp,
+			re.Font_DrawString(xOffset + con.charWidth, v, sTemp,
 				g_color_table[currentColor], iFontIndex, -1, fFontScale, cls.xadjust, cls.yadjust);
 
 			v +=  iPixelHeightToAdvance;
 		}
 		else
 		{
-			for (x = 0 ; x < con.linewidth ; x++) {
+			for (x = con_timestamps->integer == 1 ? CON_TIMESTAMP_LEN : 0 ; x < con.linewidth ; x++) {
 				if ( text[x].f.character == ' ' ) {
 					continue;
 				}
@@ -906,11 +910,8 @@ void Con_DrawNotify (void)
 					currentColor = text[x].f.color;
 					re.SetColor( g_color_table[currentColor] );
 				}
-				if (!cl_conXOffset)
-				{
-					cl_conXOffset = Cvar_Get ("cl_conXOffset", "0", 0);
-				}
-				SCR_DrawSmallChar( (int)(cl_conXOffset->integer + (x+1)*con.charWidth), v, text[x].f.character );
+
+				SCR_DrawSmallChar( (int)(xOffset + (x+1)*con.charWidth), v, text[x].f.character );
 			}
 
 			v += con.charHeight;
