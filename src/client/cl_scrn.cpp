@@ -453,7 +453,12 @@ void SCR_DrawScreenField( stereoFrame_t stereoFrame ) {
 			{
 				// workaround for ingame UI not loading connect.menu
 				qhandle_t hShader = re.RegisterShader("menu/art/unknownmap");
-				re.DrawStretchPic(0, 0, 640, 480, 0, 0, 1, 1, hShader, 1, 1);
+				const float xOffset = 0.5f * (((float)SCREEN_HEIGHT * cls.glconfig.vidWidth / cls.glconfig.vidHeight) - SCREEN_WIDTH);
+				re.SetColor(colorBlack);
+				re.DrawStretchPic(0, 0, xOffset, SCREEN_HEIGHT, 0, 0, 1, 1, cls.whiteShader, cls.cgxadj, cls.cgyadj);
+				re.DrawStretchPic(xOffset + SCREEN_WIDTH, 0, xOffset, SCREEN_HEIGHT, 0, 0, 1, 1, cls.whiteShader, cls.cgxadj, cls.cgyadj);
+				re.SetColor(NULL);
+				re.DrawStretchPic(xOffset, 0, SCREEN_WIDTH, SCREEN_HEIGHT, 0, 0, 1, 1, hShader, cls.cgxadj, cls.cgyadj);
 			}
 			// connecting clients will only show the connection dialog
 			// refresh to update the time
