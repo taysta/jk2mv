@@ -669,6 +669,7 @@ void CL_ConsolePrint( const char *txt, qboolean extendedColors ) {
 	char			c;
 	int				y;
 	qboolean		skipnotify = qfalse;
+	int				prev;
 
 	// for some demos we don't want to ever show anything on the console
 	if (cl_noprint && cl_noprint->integer) {
@@ -725,7 +726,21 @@ void CL_ConsolePrint( const char *txt, qboolean extendedColors ) {
 
 			con.text[y * con.rowwidth + CON_TIMESTAMP_LEN + con.x].f = { color, c };
 			con.x++;
+			y = con.current % con.totallines;
 			break;
+		}
+	}
+
+	if (con.display >= con.current)
+	{
+		if (skipnotify) {
+			prev = con.current % NUM_CON_TIMES - 1;
+			if (prev < 0)
+				prev = NUM_CON_TIMES - 1;
+			con.times[prev] = 0;
+		}
+		else {
+			con.times[con.current % NUM_CON_TIMES] = cls.realtime;
 		}
 	}
 
