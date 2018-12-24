@@ -362,7 +362,7 @@ void CL_SystemInfoChanged( void ) {
 			}
 
 			if (cls.state < CA_ACTIVE && Cvar_VariableIntegerValue("fs_globalcfg")) {
-				if (!strlen(value))
+				if (!strlen(value) || value[0] == '\0')
 					Cbuf_ExecuteText(EXEC_APPEND, va("exec %s.cfg\n", BASEGAME));
 				else
 					Cbuf_ExecuteText(EXEC_APPEND, va("exec %s.cfg\n", value));

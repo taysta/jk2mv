@@ -1710,7 +1710,17 @@ void CL_NextDownload(void) {
 		clc.downloadRestart = qtrue;
 
 		Q_strncpyz(remoteNameCpy, remoteName, sizeof(remoteNameCpy));
-		Q_strncpyz(localNameCpy, localName, sizeof(localNameCpy));
+
+		if (Cvar_VariableIntegerValue("fs_globalcfg") && Q_stricmpn(localName, "base/", 4)) {
+			Com_Printf("^3server sent file not in base folder\n");
+			//Com_Printf("%s\n", Q_strchrs(localName, "/"));
+
+			Com_sprintf(localNameCpy, sizeof(localNameCpy), "base/%s", Q_strchrs(localName, "/")+1);
+			Com_Printf("new file name is %s\n", localNameCpy);
+		}
+		else {
+			Q_strncpyz(localNameCpy, localName, sizeof(localNameCpy));
+		}
 
 		// move over the rest
 		memmove( clc.downloadList, s, strlen(s) + 1);
