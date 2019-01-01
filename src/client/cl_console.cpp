@@ -692,7 +692,7 @@ void CL_ConsolePrint( const char *txt, qboolean extendedColors ) {
 
 	const bool use102color = MV_USE102COLOR;
 
-	color = ColorIndex(stampColor);
+	color = ColorIndex(COLOR_WHITE);
 
 	while ( (c = *txt) != 0 ) {
 		if ( Q_IsColorString( txt ) ||
