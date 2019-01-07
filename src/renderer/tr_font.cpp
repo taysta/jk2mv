@@ -731,11 +731,21 @@ int RE_Font_StrLenPixels(const char *psText, const int iFontHandle, float fScale
 	//It gets confused about ^blah here too and reports an inaccurate length as a result
 	const char *pch = psText;
 	while (*pch && i < sizeof(parseText)-1) {
+#if 1
+		if (Q_IsColorString(pch) || (MV_USE102COLOR && Q_IsColorString_1_02(pch)) || Q_IsColorString_Extended(pch)) {
+			++pch;	//skip past ^
+			++pch;	//skip past the char after ^
+		}
+		else if (*pch == '^') {
+			pch++; //just skip it once
+		}
+#else
 		if (*pch == '^') {
 			++pch;	//skip past ^
 			if (*pch)
 				++pch;	//skip past the char after ^
 		}
+#endif
 		else {
 			parseText[i++] = *(pch++);
 		}
@@ -938,8 +948,7 @@ void RE_Font_DrawString(int ox, int oy, const char *psText, const vec4_t rgba, i
 			break;
 #if 1
 		case '^':
-			if (*psText && *psText != '\0' && *psText != ' ' && *psText != '^'&& *psText != 10
-				&& *psText != 13 && *psText != 32) //uugh
+			if (Q_IsColorString(psText - 1) || (MV_USE102COLOR && Q_IsColorString_1_02(psText - 1)) || Q_IsColorString_Extended(psText - 1))
 			{
 				colour = ColorIndex(*psText);
 				if (!gbInShadow)
