@@ -618,10 +618,13 @@ rescan:
 			if (con_notifyconnect->integer)
 				WIN_SetTaskbarState(TBS_NOTIFY, 0, 0);
 		}
-		if (Q_stristr(s, "@@@PLCALLEDVOTE")) {
+		else if (Q_stristr(s, "@@@PLCALLEDVOTE")) {
 			stampColor = COLOR_ORANGE;
 			if (con_notifyvote->integer)
 				WIN_SetTaskbarState(TBS_NOTIFY, 0, 0);
+		}
+		else {
+			stampColor = COLOR_LT_GREY;
 		}
 		return qtrue;
 	}

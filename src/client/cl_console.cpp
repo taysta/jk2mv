@@ -678,9 +678,11 @@ void CL_ConsolePrint( const char *txt, qboolean extendedColors ) {
 
 	// TTimo - prefix for text that shows up in console but not in notify
 	// backported from RTCW
+#if 0
 	if (stampColor == COLOR_WHITE || stampColor == COLOR_CYAN) {
 		skipnotify = qtrue;
 	}
+#endif
 	if (!Q_strncmp(txt, "[skipnotify]", 12)) {
 		skipnotify = qtrue;
 		txt += 12;
