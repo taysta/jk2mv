@@ -3022,7 +3022,6 @@ void CL_InitRef( void ) {
 
 //===========================================================================================
 
-
 void CL_SetModel_f( void ) {
 	char	*arg;
 	char	name[256];
@@ -3030,9 +3029,12 @@ void CL_SetModel_f( void ) {
 	arg = Cmd_Argv( 1 );
 	if (arg[0]) {
 		Cvar_Set( "model", arg );
+		Cvar_Set( "team_model", arg );
 	} else {
 		Cvar_VariableStringBuffer( "model", name, sizeof(name) );
 		Com_Printf("model is set to %s\n", name);
+		//Cvar_VariableStringBuffer("team_model", name, sizeof(name));
+		//Com_Printf("team_model is set to %s\n", name);
 	}
 }
 
