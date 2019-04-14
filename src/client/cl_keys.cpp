@@ -951,7 +951,13 @@ void Field_CharEvent( field_t *edit, int ch ) {
 		return;
 	}
 
-	if ( ch == 'a' - 'a' + 1 ) {    // ctrl-a is home
+	if (ch == 'a' - 'a' + 1) {		// ctrl-a clears field and copies contents to clipboard
+		Sys_SetClipboardData(edit->buffer);
+		Field_Clear(edit);
+		return;
+	}
+
+	if ( ch == 'q' - 'a' + 1 ) {    // ctrl-q is home
 		edit->cursor = 0;
 	}
 
