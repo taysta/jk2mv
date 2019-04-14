@@ -11,6 +11,8 @@
 cvar_t	fx_debug;
 cvar_t	fx_freeze;
 
+cvar_t	*fx_physics;//JAPRO ENGINE
+
 #define DEFAULT_EXPLOSION_RADIUS	512
 
 // Stuff for the FxHelper

@@ -95,6 +95,11 @@ int	FX_Init( void )
 	FX_Free();
 
 	nextValidEffect = &effectList[0];
+
+	//JAPRO ENGINE
+	fx_physics = Cvar_Get("fx_physics", "2", CVAR_ARCHIVE/*,
+		"Controls physics applied to FX system particles - 0: Disable all FX physics - 1: use non-expensive physics only - 2: Use flags in the fx file (Default behavior) - 3: Force expensive physics on all particles"*/);
+
 	theFxHelper.ReInit();
 
 	return true;
