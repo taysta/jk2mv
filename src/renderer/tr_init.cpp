@@ -1179,6 +1179,30 @@ void GfxInfo_f( void )
 	}
 }
 
+void R_RemapSkyShader_f(void) {
+	int num;
+
+	if (ri.Cmd_Argc() != 2 || !strlen(ri.Cmd_Argv(1))) {
+		ri.Printf(PRINT_ALL, "Usage: /remapSkyShader <new>\n");
+		return;
+	}
+
+	for (num = 0; num < tr.numShaders; num++) {
+		if (tr.shaders[num]->isSky)
+		{
+			R_RemapShader(tr.shaders[num]->name, ri.Cmd_Argv(1), NULL);
+		}
+	}
+}
+
+void R_ClearRemaps_f(void) {
+	int num;
+
+	for (num = 0; num < tr.numShaders; num++) {
+		tr.shaders[num]->remappedShader = NULL;
+	}
+}
+
 #endif // !DEDICATED
 /*
 ===============
@@ -1346,6 +1370,9 @@ Ghoul2 Insert End
 	ri.Cmd_AddCommand( "gfxinfo", GfxInfo_f );
 	ri.Cmd_AddCommand("r_we", R_WorldEffect_f);
 	ri.Cmd_AddCommand( "imagecacheinfo", RE_RegisterImages_Info_f);
+	
+	ri.Cmd_AddCommand("remapSky", R_RemapSkyShader_f);
+	ri.Cmd_AddCommand("clearRemaps", R_ClearRemaps_f);
 #endif
 	ri.Cmd_AddCommand("modellist", R_Modellist_f);
 	ri.Cmd_AddCommand( "modelcacheinfo", RE_RegisterModels_Info_f);
