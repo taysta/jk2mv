@@ -132,7 +132,10 @@ time_t Sys_FileTime( const char *path );
 
 qboolean Sys_LowPhysicalMemory();
 
+#ifdef _WIN32
 void Sys_SetProcessorAffinity( void );
+void Sys_SetProcessPriority(void);
+#endif
 
 int Sys_FLock(int fd, flockCmd_t cmd, qboolean nb);
 void Sys_PrintBacktrace(void);

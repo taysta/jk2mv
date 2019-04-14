@@ -72,6 +72,11 @@ cvar_t	*mv_apienabled;
 cvar_t	*com_timestamps;
 cvar_t	*com_debugMessage;
 
+#ifdef _WIN32
+cvar_t	*com_affinity;
+cvar_t	*com_priority;
+#endif
+
 cvar_t	*com_renderfps;
 cvar_t	*cl_commandsize;//Loda - FPS UNLOCK ENGINE
 
@@ -2517,6 +2522,11 @@ void Com_Init( char *commandLine ) {
 	com_cameraMode = Cvar_Get ("com_cameraMode", "0", CVAR_CHEAT);
 	com_debugMessage = Cvar_Get ("com_debugMessage", "0", CVAR_TEMP);
 
+#ifdef _WIN32
+	com_affinity = Cvar_Get("com_affinity", "0", 0);
+	com_priority = Cvar_Get("com_priority", "-1", CVAR_ARCHIVE|CVAR_NORESTART); //duno, -1 = do nothing, 1 = low priority, 2 = normal priority, 3 = high priority? i guess??
+#endif
+
 	cl_paused = Cvar_Get ("cl_paused", "0", CVAR_ROM);
 	sv_paused = Cvar_Get ("sv_paused", "0", CVAR_ROM);
 	com_sv_running = Cvar_Get ("sv_running", "0", CVAR_ROM);
@@ -2930,6 +2940,20 @@ void Com_Frame( void ) {
 		c_patch_traces = 0;
 		c_pointcontents = 0;
 	}
+
+#ifdef _WIN32
+	if ( com_affinity->modified )
+ 	{
+ 		com_affinity->modified = qfalse;
+		Sys_SetProcessorAffinity();
+	}
+
+	if (com_priority->modified)
+	{
+		com_priority->modified = qfalse;
+		Sys_SetProcessPriority();
+	}
+#endif
 
 	com_frameNumber++;
 }
