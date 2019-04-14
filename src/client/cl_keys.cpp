@@ -796,6 +796,31 @@ void Field_KeyDownEvent( field_t *edit, int key ) {
 		return;
 	}
 
+	// ctrl backspace is del
+	if ((key == A_BACKSPACE) && kg.keys[A_CTRL].down) {
+		while (edit->cursor > 0) {
+			len = strlen(edit->buffer);
+			//Com_Printf("Deleting %c\n", (char)edit->buffer[edit->cursor - 1]);
+
+			if (edit->buffer[edit->cursor-1] == ' ' && edit->buffer[edit->cursor-2] != ' ') //Idk, break if its a space (unless its a group of spaces?)
+				break;
+			if (edit->buffer[edit->cursor - 1] == '/' && edit->buffer[edit->cursor - 2] != '/') //Idk, break if its a space (unless its a group of spaces?)
+				break;
+			if (edit->buffer[edit->cursor - 1] == '_' && edit->buffer[edit->cursor - 2] != '_') //Idk, break if its a space (unless its a group of spaces?)
+				break;
+			if (edit->buffer[edit->cursor - 1] == '-' && edit->buffer[edit->cursor - 2] != '-') //Idk, break if its a space (unless its a group of spaces?)
+				break;
+
+			memmove(edit->buffer + edit->cursor - 1, edit->buffer + edit->cursor, len + 1 - edit->cursor);
+			edit->cursor--;
+			if (edit->cursor < edit->scroll)
+			{
+				edit->scroll--;
+			}
+		}
+		return;
+	}
+
 	if ( key == A_DELETE || ( keynames[key].lower == 'd' && kg.keys[A_CTRL].down ) ) {
 		if ( edit->cursor < len ) {
 			Field_SaveHistory( edit );
