@@ -508,11 +508,12 @@ void CL_InitRef( void );
 
 int CL_ServerStatus( const char *serverAddress, char *serverStatusString, int maxLen );
 
-
-void CL_LogPrintf(fileHandle_t fileHandle, const char *fmt, ...);
-
 void CL_GetVMGLConfig(vmglconfig_t *vmglconfig);
 int CL_ScaledMilliseconds(void);
+
+//EternalJK2MV
+void CL_RandomizeColors(const char* in, char *out);
+void CL_LogPrintf(fileHandle_t fileHandle, const char *fmt, ...);
 
 //
 // cl_input
