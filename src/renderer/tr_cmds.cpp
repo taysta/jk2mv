@@ -388,6 +388,25 @@ void RE_BeginFrame( stereoFrame_t stereoFrame ) {
 		R_SetColorMappings();
 	}
 
+	if (r_overBrightBits->modified) {
+		char mapname[MAX_QPATH] = {0};
+
+		R_SyncRenderThread();
+		R_SetColorMappings();
+
+		if (tr.world)
+		{
+			Q_strncpyz(mapname, tr.world->name, sizeof(mapname));
+			tr.worldMapLoaded = qfalse;
+			tr.world = NULL;
+			RE_LoadWorldMap(mapname);
+		}
+
+		//reset these last...
+		if (r_overBrightBits->modified)
+			r_overBrightBits->modified = qfalse;
+	}
+
 	//
 	// console font stuff
 	//

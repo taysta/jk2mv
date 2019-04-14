@@ -1027,6 +1027,7 @@ typedef struct {
 
 	qboolean				worldMapLoaded;
 	world_t					*world;
+	char					worldDir[MAX_QPATH];
 
 	const byte				*externalVisData;	// from RE_SetWorldVisData, shared with CM_Load
 

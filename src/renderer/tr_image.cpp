@@ -2607,6 +2607,9 @@ void R_SetColorMappings( void ) {
 		tr.overbrightBits = 0;
 	}
 
+	if (!tr.worldDir || !tr.worldDir[0]) //don't overbright the main menu
+		tr.overbrightBits = 0;
+
 	if ( tr.overbrightBits > 1 ) {
 		tr.overbrightBits = 1;
 	}
