@@ -17,6 +17,8 @@ Ghoul2 Insert Start
 Ghoul2 Insert End
 */
 
+#include "mv_setup.h"
+
 extern	botlib_export_t	*botlib_export;
 void SP_Register(const char *Package);
 

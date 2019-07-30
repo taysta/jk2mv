@@ -151,7 +151,9 @@ endif()
 
 # Binary names
 set(MVMP "eternaljk2mvmp")
-set(MVMENU "eternaljk2mvmenu_${Architecture}")
+set(MVMENU_STRING "eternaljk2mvmenu")
+set(MVMENU "${MVMENU_STRING}_${Architecture}")
+
 set(MVDED "eternaljk2mvded")
 
 # Directories

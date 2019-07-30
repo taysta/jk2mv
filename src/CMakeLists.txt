@@ -510,7 +510,7 @@ if (BuildMVMP)
 	set_target_properties(${MVMP} PROPERTIES CXX_STANDARD 11)
 	set_target_properties(${MVMP} PROPERTIES INCLUDE_DIRECTORIES "${MVMPIncludeDirs}")
 	target_link_libraries(${MVMP} ${MVMPLibraries} ${JPEG_LIBRARIES} ${PNG_LIBRARIES} ${MINIZIP_LIBRARIES} ${ZLIB_LIBRARIES})
-	set_target_properties(${MVMP} PROPERTIES PROJECT_LABEL "jk2mvmp")
+	set_target_properties(${MVMP} PROPERTIES PROJECT_LABEL "JK2MV MP Client")
 
 	# installation
 	if(MSVC)
@@ -655,7 +655,7 @@ if (BuildMVDED)
 	set_target_properties(${MVDED} PROPERTIES CXX_STANDARD 11)
 	set_target_properties(${MVDED} PROPERTIES INCLUDE_DIRECTORIES "${MVDEDIncludeDirs}")
 	target_link_libraries(${MVDED} ${MVDEDLibraries} ${MINIZIP_LIBRARIES} ${ZLIB_LIBRARIES})
-	set_target_properties(${MVDED} PROPERTIES PROJECT_LABEL "jk2mvded")
+	set_target_properties(${MVDED} PROPERTIES PROJECT_LABEL "JK2MV MP Dedicated Server")
 
 	add_dependencies(${MVDED} assetsmv)
 

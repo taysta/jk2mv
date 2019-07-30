@@ -4,6 +4,8 @@
 #define JK2MV_VERSION "@MV_VERSION@"
 #define Q3_VERSION "JK2MV: v" JK2MV_VERSION
 
+#define JK2MV_MENU "@MVMENU_STRING@"
+
 #cmakedefine Backtrace_FOUND
 #ifdef Backtrace_FOUND
 #define Q_BACKTRACE 1
