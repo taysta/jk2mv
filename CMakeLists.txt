@@ -39,8 +39,8 @@ endif()
 
 # Customizable options
 option(BuildPortableVersion "Build portable version (does not read or write files from your user/home directory" ON)
-option(BuildMVMP "Whether to create targets for the client (jk2mvmp & jk2mvmenu)" ON)
-option(BuildMVDED "Whether to create targets for the dedicated server (jk2mvded)" ON)
+option(BuildMVMP "Whether to create targets for the client (eternaljk2mvmp & eternaljk2mvmenu)" ON)
+option(BuildMVDED "Whether to create targets for the dedicated server (eternaljk2mvded)" ON)
 option(BuildMVSDK "Whether to build and integrate the mvsdk modules" ON)
 
 if(NOT EXISTS "${CMAKE_SOURCE_DIR}/src/mvsdk/code/ui/CMakeLists.txt")
@@ -48,7 +48,7 @@ if(NOT EXISTS "${CMAKE_SOURCE_DIR}/src/mvsdk/code/ui/CMakeLists.txt")
 endif()
 
 if(BuildMVSDK AND NOT EXISTS "${CMAKE_SOURCE_DIR}/src/mvsdk/CMakeLists.txt")
-    message(WARNING "Could not find CMakeLists.txt in \"src/mvsdk\". Make sure you cloned jk2mv including submodules. Continuing with BuildMVSDK=OFF.")
+    message(WARNING "Could not find CMakeLists.txt in \"src/mvsdk\". Make sure you cloned eternaljk2mv including submodules. Continuing with BuildMVSDK=OFF.")
     set(BuildMVSDK OFF)
 endif()
 
@@ -150,9 +150,9 @@ if(ARCH_UNKNOWN)
 endif()
 
 # Binary names
-set(MVMP "jk2mvmp")
-set(MVMENU "jk2mvmenu_${Architecture}")
-set(MVDED "jk2mvded")
+set(MVMP "eternaljk2mvmp")
+set(MVMENU "eternaljk2mvmenu_${Architecture}")
+set(MVDED "eternaljk2mvded")
 
 # Directories
 if(MultiConfigGenerator)
