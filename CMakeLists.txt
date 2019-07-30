@@ -14,14 +14,14 @@ list(INSERT CMAKE_MODULE_PATH 0 "${RESDir}")
 # Project & Versioning
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
-set(ProjectName "EternalJK2MV" CACHE STRING "Project Name")
+set(ProjectName "EternalJK2" CACHE STRING "Project Name")
 set(ProjectURL "https://jk2mv.org")
 project(${ProjectName})
 
 include(GetGitRevisionDescription)
 git_describe(MV_VERSION --tags)
 if(NOT MV_VERSION OR MV_VERSION STREQUAL "GIT-NOTFOUND" OR MV_VERSION STREQUAL "HEAD-HASH-NOTFOUND")
-	set(MV_VERSION "1.6.0")
+	set(MV_VERSION "1.4.1")
 	message(WARNING "Could not find git or git repository. Install git and make sure you actually cloned the repository (Directory named .git must exist) for correct versioning.")
 endif()
 
