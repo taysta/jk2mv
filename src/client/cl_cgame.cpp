@@ -570,7 +570,7 @@ rescan:
 	//chat logs
 	if (!strcmp(cmd, "chat") || !strcmp(cmd, "tchat")) {
 		if (cl_logChat->integer) {
-			char chat[MAX_NAME_LENGTH + 4 + MAX_SAY_TEXT + 12];
+			char chat[MAX_STRING_CHARS] = { 0 };
 			int i, l;
 
 			s = Cmd_Argv(1);

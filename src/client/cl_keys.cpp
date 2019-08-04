@@ -1356,9 +1356,8 @@ In game talk message
 ================
 */
 void Message_Key( int key ) {
-	char	buffer[MAX_STRING_CHARS];
-	char	coloredString[MAX_EDIT_LINE] = { 0 };
-
+	char buffer[MAX_STRING_CHARS] = { 0 };
+	char coloredString[MAX_STRING_CHARS] = { 0 };
 
 	if (key == A_ESCAPE) {
 		cls.keyCatchers &= ~KEYCATCH_MESSAGE;
@@ -1374,7 +1373,6 @@ void Message_Key( int key ) {
 
 			if (Q_strchrs(chatField.buffer, "%") || Q_strchrs(chatField.buffer, "\""))
 			{ //replace " with '' and % with something github hates
-				char buffer[MAX_EDIT_LINE];
 				char *src = buffer, *dst = chatField.buffer;
 
 				Q_strncpyz(buffer, chatField.buffer, sizeof(buffer));
