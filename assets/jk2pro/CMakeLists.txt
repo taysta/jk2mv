@@ -4,6 +4,14 @@ if(NOT InMV)
 endif(NOT InMV)
 
 set(AssetsFiles
+	"gfx/2d/crosshaira.tga"
+	"gfx/2d/crosshairj.tga"
+	"gfx/2d/mp_yteam_symbol.tga"
+
+	"gfx/effects/mp_y_forcefield.jpg"
+	"gfx/effects/mp_y_forcefield_d.jpg"
+	"gfx/effects/mp_y_forcefield_d1.jpg"
+
 	"gfx/hud/keys/back_off.tga"
 	"gfx/hud/keys/back_on.tga"
 	"gfx/hud/keys/crouch_off.tga"
@@ -16,16 +24,23 @@ set(AssetsFiles
 	"gfx/hud/keys/left_on.tga"
 	"gfx/hud/keys/right_off.tga"
 	"gfx/hud/keys/right_on.tga"
-	
+
+	"icons/iconf_neutral1.tga"
+	"icons/iconf_neutral1_x.tga"
+
 	"menu/medals/medal_assist.png"
 	"menu/medals/medal_capture.png"
 	"menu/medals/medal_defend.png"
 	"menu/medals/medal_excellent.png"
 	"menu/medals/medal_gauntlet.png"
 	"menu/medals/medal_impressive.png"
-	
+
+	"models/flags/n_flag.md3"
+	"models/map_objects/mp/flag3.jpg"
+
+	"shaders/ctf3_yellowteam.shader"
 	"shaders/q3mod.shader"
-	
+
 	"sound/chars/mothma/misc/40MOM017.mp3"
 	"sound/chars/mothma/misc/40MOM019.mp3"
 	"sound/chars/mothma/misc/40MOM024.mp3"
