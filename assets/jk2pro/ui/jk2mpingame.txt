@@ -7,6 +7,7 @@
 	loadMenu { "ui/jk2mp/ingame_controls.menu" }
 	loadMenu { "ui/jk2mp/ingame_join.menu" }
 	loadMenu { "ui/jk2mp/ingame_setup.menu" }
+	loadMenu { "ui/jk2mp/ingame_setup_modoptions.menu" }
 	loadMenu { "ui/jk2mp/ingame_leave.menu" }
 	loadMenu { "ui/jk2mp/ingame_player.menu" }
 	loadMenu { "ui/jk2mp/ingame_playerforce.menu" }
@@ -15,4 +16,8 @@
 	loadMenu { "ui/jk2mp/ingame_orders.menu" }
 
 	loadMenu { "ui/jk2mp/vid_warning.menu" }
+
+	loadMenu { "ui/jk2mp/password.menu" }
+	loadMenu { "ui/jk2mp/ingame_server.menu" }
+	loadMenu { "ui/jk2mp/ingame_camera.menu" }
 }

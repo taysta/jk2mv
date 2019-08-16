@@ -603,7 +603,7 @@ if (BuildMVMP)
 
 	set_target_properties(${MVMENU} PROPERTIES C_STANDARD 90)
 	set_target_properties(${MVMENU} PROPERTIES INCLUDE_DIRECTORIES "${MVMENUIncludeDirs}")
-	set_target_properties(${MVMENU} PROPERTIES PROJECT_LABEL "jk2mvmenu")
+	set_target_properties(${MVMENU} PROPERTIES PROJECT_LABEL "JK2MV MP UI")
 
 	if(BuildPortableVersion)
 		if(WIN32)

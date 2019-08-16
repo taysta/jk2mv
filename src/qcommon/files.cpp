@@ -3303,22 +3303,22 @@ static void FS_Startup( const char *gameName ) {
 	fs_debug = Cvar_Get( "fs_debug", "0", 0 );
 	fs_copyfiles = Cvar_Get( "fs_copyfiles", "0", CVAR_INIT );
 	fs_basepath = Cvar_Get ("fs_basepath", Sys_DefaultInstallPath(), CVAR_INIT | CVAR_VM_NOWRITE );
-	fs_basegame = Cvar_Get ("fs_basegame", "eternaljk2", CVAR_INIT );
 //#ifndef PORTABLE
 	fs_portable = Cvar_Get("fs_portable", "1", CVAR_INIT|CVAR_VM_NOWRITE); //"Disable fs_homepath and use only one folder for all game files" 
 //#endif
 	fs_homepath = Cvar_Get ("fs_homepath", Sys_DefaultHomePath(), CVAR_INIT | CVAR_VM_NOWRITE );
 
 #ifndef DEDICATED
-//cancer?
-	fs_globalcfg = Cvar_Get("fs_globalcfg", "1", CVAR_ARCHIVE/* | CVAR_LATCH*/ | CVAR_NORESTART);
+	fs_basegame = Cvar_Get( "fs_basegame", "eternaljk2", CVAR_INIT );
+	fs_globalcfg = Cvar_Get( "fs_globalcfg", "1", CVAR_ARCHIVE/* | CVAR_LATCH*/ | CVAR_NORESTART );
 
 	if (fs_globalcfg->integer)
-		fs_gamedirvar = Cvar_Get ("fs_basegame", "eternaljk2", CVAR_INIT);//?
+		fs_gamedirvar = fs_basegame;
 	else
-		fs_gamedirvar = Cvar_Get("fs_game", "", CVAR_INIT | CVAR_SYSTEMINFO);
+		fs_gamedirvar = Cvar_Get( "fs_game", "", CVAR_INIT | CVAR_SYSTEMINFO );
 #else
-		fs_gamedirvar = Cvar_Get("fs_game", "", CVAR_INIT | CVAR_SYSTEMINFO);
+	fs_basegame = Cvar_Get( "fs_basegame", "", CVAR_INIT );
+	fs_gamedirvar = Cvar_Get( "fs_game", "", CVAR_INIT | CVAR_SYSTEMINFO );
 #endif
 
 	assetsPath = Sys_DefaultAssetsPath();

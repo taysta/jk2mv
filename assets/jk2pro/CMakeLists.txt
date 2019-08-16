@@ -49,6 +49,11 @@ set(AssetsFiles
 	"sound/chars/mothma/misc/40MOM053.mp3"
 	"sound/chars/tavion/misc/jump1.mp3"
 	"sound/common/warning.wav"
+
+	"ui/jk2mp/ingame.menu"
+	"ui/jk2mp/ingame_camera.menu"
+	"ui/jk2mp/ingame_server.menu"
+	"ui/jk2mpingame.txt"
 )
 
 source_group("jk2pro-assets" FILES ${AssetsFiles})
