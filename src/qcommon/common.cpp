@@ -3025,6 +3025,20 @@ float Q_acos(float c) {
 	return angle;
 }
 
+float Q_asin(float c) {
+	float angle;
+
+	angle = asinf(c);
+
+	if (angle > (float) M_PI) {
+		return (float)M_PI;
+	}
+	if (angle < -(float) M_PI) {
+		return (float)M_PI;
+	}
+	return angle;
+}
+
 // multiprotocol support
 mvversion_t glbpro;
 

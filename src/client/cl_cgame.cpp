@@ -1009,6 +1009,8 @@ intptr_t CL_CgameSystemCalls(intptr_t *args) {
 		return FloatAsInt( ceilf( VMF(1) ) );
 	case CGAME_ACOS:
 		return FloatAsInt( Q_acos( VMF(1) ) );
+	case CGAME_ASIN:
+		return FloatAsInt( Q_asin( VMF(1) ) );
 
 	case CG_PC_ADD_GLOBAL_DEFINE:
 		return botlib_export->PC_AddGlobalDefine( VMAS(1) );
